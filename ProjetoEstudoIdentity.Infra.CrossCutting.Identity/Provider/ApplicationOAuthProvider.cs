@@ -23,6 +23,7 @@ namespace ProjetoEstudoIdentity.Infra.CrossCutting.Identity.Provider
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
+            //Erro: userManager sempre é nulo
             var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
 
             var user = await userManager.FindAsync(context.UserName, context.Password);
@@ -56,7 +57,9 @@ namespace ProjetoEstudoIdentity.Infra.CrossCutting.Identity.Provider
         {
             // Resource owner password credentials does not provide a client ID.
             if (context.ClientId == null)
+            {
                 context.Validated();
+            }
 
             return Task.FromResult<object>(null);
         }
@@ -68,7 +71,9 @@ namespace ProjetoEstudoIdentity.Infra.CrossCutting.Identity.Provider
             var expectedRootUri = new Uri(context.Request.Uri, "/");
 
             if (expectedRootUri.AbsoluteUri == context.RedirectUri)
+            {
                 context.Validated();
+            }
 
             return null;
         }

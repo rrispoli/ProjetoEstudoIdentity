@@ -51,6 +51,11 @@
   <ItemGroup>
     <Compile Include="Context\ProjetoEstudoEntityContext.cs" />
     <Compile Include="EntityConfig\UserConfig.cs" />
+    <Compile Include="Migrations\201703151809461_Initial.cs" />
+    <Compile Include="Migrations\201703151809461_Initial.Designer.cs">
+      <DependentUpon>201703151809461_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ItemRepository.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />
@@ -66,7 +71,11 @@
       <Name>ProjetoEstudoIdentity.Domain</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201703151809461_Initial.resx">
+      <DependentUpon>201703151809461_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

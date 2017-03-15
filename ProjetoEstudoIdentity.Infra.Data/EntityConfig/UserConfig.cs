@@ -14,8 +14,16 @@ namespace ProjetoEstudoIdentity.Infra.Data.EntityConfig
                 .HasMaxLength(128);
 
             Property(u => u.Email)
-                .IsRequired()
                 .HasMaxLength(256);
+
+            Property(u => u.PhoneNumberConfirmed)
+                .IsRequired();
+
+            Property(u => u.TwoFactorEnabled)
+                .IsRequired();
+
+            Property(u => u.AccessFailedCount)
+                .IsRequired();
 
             Property(u => u.UserName)
                 .IsRequired()

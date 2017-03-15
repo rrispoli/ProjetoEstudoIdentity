@@ -23,6 +23,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{B4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjetoEstudoIdentity.Services.API", "ProjetoEstudoIdentity.Services.API\ProjetoEstudoIdentity.Services.API.csproj", "{57C62007-32D8-45C3-B507-2CF5B9CC01C2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{F553CF33-90C8-4DD8-A7B7-4D638C2E9FA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjetoEstudoIdentity.Presentation.MVC", "ProjetoEstudoIdentity.Presentation.MVC\ProjetoEstudoIdentity.Presentation.MVC.csproj", "{63DFC656-F08F-46D6-B013-B3EC95784276}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +53,10 @@ Global
 		{57C62007-32D8-45C3-B507-2CF5B9CC01C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57C62007-32D8-45C3-B507-2CF5B9CC01C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57C62007-32D8-45C3-B507-2CF5B9CC01C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63DFC656-F08F-46D6-B013-B3EC95784276}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63DFC656-F08F-46D6-B013-B3EC95784276}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63DFC656-F08F-46D6-B013-B3EC95784276}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63DFC656-F08F-46D6-B013-B3EC95784276}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,5 +69,6 @@ Global
 		{DF5AC992-1626-41A6-9873-433C3F997AE3} = {F42186DB-18C5-4E99-8A79-86E3207DD6FA}
 		{C5D6D9DD-CD7B-42C1-B71A-BDB9C92021D5} = {89513775-07A1-4A7B-BAED-7CE0F59257EB}
 		{57C62007-32D8-45C3-B507-2CF5B9CC01C2} = {B4CA1210-B93E-45E5-98F1-D5091B126876}
+		{63DFC656-F08F-46D6-B013-B3EC95784276} = {F553CF33-90C8-4DD8-A7B7-4D638C2E9FA3}
 	EndGlobalSection
 EndGlobal

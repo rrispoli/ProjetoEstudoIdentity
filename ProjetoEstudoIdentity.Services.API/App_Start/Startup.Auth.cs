@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.Owin;
-using Microsoft.Owin.Security.Cookies;
+﻿using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using ProjetoEstudoIdentity.Infra.CrossCutting.Identity.Configuration;
@@ -12,35 +10,23 @@ namespace ProjetoEstudoIdentity.Services.API
 {
     public partial class Startup
     {
-        public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
-
+        public static OAuthAuthorizationServerOptions OAuthAuthorizationServerOptions { get; private set; }
         public static string PublicClientId { get; private set; }
 
-        // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
-        public static void ConfigureAuth(IAppBuilder app)
+        public void ConfigureOAuth(IAppBuilder app)
         {
-            // Configure the db context and user manager to use a single instance per request
-            //AQUI ACONTECE O ERRO
-            app.CreatePerOwinContext(() => GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(ApplicationUserManager)) as ApplicationUserManager);
-
-            // Enable the application to use a cookie to store information for the signed in user
-            // and to use a cookie to temporarily store information about a user logging in with a third party login provider
-            app.UseCookieAuthentication(new CookieAuthenticationOptions());
-            app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
-
-            // Configure the application for OAuth based flow
             PublicClientId = "self";
-            OAuthOptions = new OAuthAuthorizationServerOptions
+            OAuthAuthorizationServerOptions = new OAuthAuthorizationServerOptions()
             {
+                AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/api/token"),
-                Provider = new ApplicationOAuthProvider(PublicClientId),
-                AuthorizeEndpointPath = new PathString("/api/account/externallogin"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
-                AllowInsecureHttp = true
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(30),
+                Provider = new ApplicationOAuthProvider(PublicClientId)
             };
 
-            // Enable the application to use bearer tokens to authenticate users
-            app.UseOAuthBearerTokens(OAuthOptions);
+            // Token Generation
+            app.UseOAuthAuthorizationServer(OAuthAuthorizationServerOptions);
+            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using Microsoft.Owin;
+using Microsoft.Owin.Security.OAuth;
 using Owin;
+using ProjetoEstudoIdentity.Infra.CrossCutting.Identity.Provider;
 using ProjetoEstudoIdentity.Services.API;
-using System.Web.Http;
+using System;
 
 [assembly: OwinStartup(typeof(Startup))]
 namespace ProjetoEstudoIdentity.Services.API
@@ -10,11 +12,7 @@ namespace ProjetoEstudoIdentity.Services.API
     {
         public void Configuration(IAppBuilder app)
         {
-            HttpConfiguration config = new HttpConfiguration();
-            SimpleInjectorInitializer.Register(config);
-            ConfigureAuth(app);
-            WebApiConfig.Register(config);      
-            app.UseWebApi(config);    
+            ConfigureOAuth(app);
         }
     }
 }

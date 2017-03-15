@@ -22,9 +22,11 @@ namespace ProjetoEstudoIdentity.Infra.CrossCutting.IoC
             container.Register<ApplicationUserManager>(Lifestyle.Scoped);
             container.Register<ApplicationSignInManager>(Lifestyle.Scoped);
 
+            container.Register(typeof(IServiceBase<>), typeof(ServiceBase<>), Lifestyle.Scoped);
             container.Register<IUserService, UserService>(Lifestyle.Scoped);
             container.Register<IItemService, ItemService>(Lifestyle.Scoped);
 
+            container.Register(typeof(IRepositoryBase<>), typeof(RepositoryBase<>), Lifestyle.Scoped);
             container.Register<IUserRepository, UserRepository>(Lifestyle.Scoped);
             container.Register<IItemRepository, ItemRepository>(Lifestyle.Scoped);
         }

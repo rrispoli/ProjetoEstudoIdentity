@@ -8,6 +8,7 @@ namespace ProjetoEstudoIdentity.Infra.CrossCutting.Identity.Model
     public class ApplicationUser : IdentityUser
     {
         public string FullName { get; set; }
+        public string AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie;
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {
