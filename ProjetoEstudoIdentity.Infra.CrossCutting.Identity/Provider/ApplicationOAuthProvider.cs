@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNet.Identity.Owin;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
-using ProjetoEstudoIdentity.Infra.CrossCutting.Identity.Configuration;
+using ProjetoEstudoIdentity.Infra.CrossCutting.Identity.Model;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,16 +13,21 @@ namespace ProjetoEstudoIdentity.Infra.CrossCutting.Identity.Provider
     public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
     {
         private readonly string _publicClientId;
+        private readonly Func<UserManager<ApplicationUser>> _userManagerFactory;
 
-        public ApplicationOAuthProvider(string publicClientId)
+        public ApplicationOAuthProvider(string publicClientId, Func<UserManager<ApplicationUser>> userManagerFactory)
         {
             if (publicClientId == null)
                 throw new ArgumentNullException("publicClientId");
 
+            if (userManagerFactory == null)
+                throw new ArgumentNullException("userManagerFactory");
+
             _publicClientId = publicClientId;
+            _userManagerFactory = userManagerFactory;
         }
 
-        public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
+        /*public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
             //Erro: userManager sempre é nulo
             var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
@@ -41,6 +47,27 @@ namespace ProjetoEstudoIdentity.Infra.CrossCutting.Identity.Provider
             var ticket = new AuthenticationTicket(oAuthIdentity, properties);
             context.Validated(ticket);
             context.Request.Context.Authentication.SignIn(cookiesIdentity);
+        }*/
+
+        public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
+        {
+            using (UserManager<ApplicationUser> userManager = _userManagerFactory())
+            {
+                var user = await userManager.FindAsync(context.UserName, context.Password);
+
+                if (user == null)
+                {
+                    context.SetError("invalid_grant", "The user name or password is incorrect.");
+                    return;
+                }
+
+                var oAuthIdentity = await userManager.CreateIdentityAsync(user, context.Options.AuthenticationType);
+                var cookiesIdentity = await userManager.CreateIdentityAsync(user, CookieAuthenticationDefaults.AuthenticationType);
+                AuthenticationProperties properties = CreateProperties(user.UserName);
+                AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
+                context.Validated(ticket);
+                context.Request.Context.Authentication.SignIn(cookiesIdentity);
+            }
         }
 
         public override Task TokenEndpoint(OAuthTokenEndpointContext context)

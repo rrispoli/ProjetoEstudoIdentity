@@ -13,7 +13,7 @@ namespace ProjetoEstudoIdentity.Infra.Data.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201703151809461_Initial"; }
+            get { return "201703230021322_Initial"; }
         }
         
         string IMigrationMetadata.Source

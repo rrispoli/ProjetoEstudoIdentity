@@ -16,7 +16,6 @@ namespace ProjetoEstudoIdentity.Infra.Data.Context
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new UserConfig());
-            base.OnModelCreating(modelBuilder);
         }
     }
 }
